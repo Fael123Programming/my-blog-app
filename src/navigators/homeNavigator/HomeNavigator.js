@@ -1,9 +1,9 @@
 import React from 'react';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import RelevantDiscussionsScreen from "./screens/RelevantDiscussionsScreen";
-import FilterDiscussionsScreen from "./screens/FilterDiscussionsScreen";
-import ReachUserScreen from "./screens/ReachUserScreen";
-import ProfileScreen from './screens/ProfileScreen';
+import RelevantDiscussions from "./screens/RelevantDiscussions";
+import FilterDiscussions from "./screens/FilterDiscussions";
+import ReachUser from "./screens/ReachUser";
+import ProfileNavigator from './screens/profile_navigator/ProfileNavigator';
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 const Tab = createBottomTabNavigator();
@@ -29,13 +29,14 @@ const HomeNavigator = () => {
                 },
                 headerShown: false,
                 tabBarShowLabel: true,
-                tabBarActiveTintColor: 'black'
+                tabBarActiveTintColor: 'black',
+                tabBarHideOnKeyboard: true
             })}
         >
-            <Tab.Screen name='Relevant' component={RelevantDiscussionsScreen}/>
-            <Tab.Screen name='Filter' component={FilterDiscussionsScreen}/>
-            <Tab.Screen name='Reach' component={ReachUserScreen}/>
-            <Tab.Screen name='Profile' component={ProfileScreen}/>
+            <Tab.Screen name='Relevant' component={RelevantDiscussions}/>
+            <Tab.Screen name='Filter' component={FilterDiscussions}/>
+            <Tab.Screen name='Reach' component={ReachUser}/>
+            <Tab.Screen name='Profile' component={ProfileNavigator}/>
         </Tab.Navigator>
     );
 };

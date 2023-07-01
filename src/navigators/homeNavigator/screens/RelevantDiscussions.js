@@ -3,14 +3,14 @@ import {
     SafeAreaView,
     View,
     Text,
-    StyleSheet
+    StyleSheet,
 } from 'react-native';
 import Fonts from '../../../utils/Fonts';
 
-const FilterDiscussionsScreen = () => {
+const RelevantDiscussions = () => {
     return (
         <SafeAreaView style={styles.container}>
-            <Text style={Fonts.displaySmall}>Filter Discussions</Text>
+            <Text style={Fonts.displaySmall}>Relevant Discussions</Text>
         </SafeAreaView>
     );
 };
@@ -24,4 +24,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default FilterDiscussionsScreen;
+export default RelevantDiscussions;

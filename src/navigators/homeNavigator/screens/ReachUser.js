@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import Fonts from '../../../utils/Fonts';
 
-const ReachUserScreen = () => {
+const ReachUser = () => {
     return (
         <SafeAreaView style={styles.container}>
             <Text style={Fonts.displaySmall}>Reach User</Text>
@@ -24,4 +24,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default ReachUserScreen;
+export default ReachUser;

@@ -15,7 +15,7 @@ import BigButton from '../../../components/BigButton';
 
 const IMAGES = '../../../../assets/images/';
 
-const WhatWeAreScreen = ({navigation}) => {
+const WhatWeAre = ({navigation}) => {
     const fadeAnim = useRef(new Animated.Value(0)).current;
     const btnOpacity = useRef(new Animated.Value(0)).current;
 
@@ -205,4 +205,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default WhatWeAreScreen;
+export default WhatWeAre;

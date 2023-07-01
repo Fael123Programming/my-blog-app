@@ -9,11 +9,11 @@ const Stack = createStackNavigator();
 const AppNavigation = () => 
     <NavigationContainer>
         <Stack.Navigator>
-            <Stack.Screen 
+            {/* <Stack.Screen 
                 name='Presentation' 
                 component={PresentationNavigator}
                 options={{headerShown: false}}
-            />
+            /> */}
             <Stack.Screen 
                 name='Home' 
                 component={HomeNavigator}

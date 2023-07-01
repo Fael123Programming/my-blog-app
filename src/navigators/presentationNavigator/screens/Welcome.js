@@ -12,7 +12,7 @@ import { StackActions } from '@react-navigation/native';
 
 const IMAGES = '../../../../assets/images/';
 
-const WelcomeScreen = ({navigation}) => {
+const Welcome = ({navigation}) => {
     const fadeAnim = useRef(new Animated.Value(0)).current;
     const [txtColor, setTxtColor] = useState(Colors.primaryKey);
     const [txtWeight, setTxtWeight] = useState('bold');
@@ -82,4 +82,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default WelcomeScreen;
+export default Welcome;
