@@ -56,7 +56,11 @@ const Login = ({navigation}) => {
                 <View style={{marginTop: 15}}>
                     <BigButton
                         title={'Login'}
-                        onPress={() => console.log('Login')}
+                        onPress={() => {
+                                console.log('Login'); 
+                                navigation.goBack(); 
+                            }
+                        }
                     />
                 </View>
             </ScrollView>

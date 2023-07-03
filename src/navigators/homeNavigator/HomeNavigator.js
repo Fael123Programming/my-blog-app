@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import RelevantDiscussions from "./screens/RelevantDiscussions";
 import FilterDiscussions from "./screens/FilterDiscussions";
 import ReachUser from "./screens/ReachUser";
-import ProfileNavigator from './screens/profile_navigator/ProfileNavigator';
+import ProfileNavigator from './screens/profileNavigator/ProfileNavigator';
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 const Tab = createBottomTabNavigator();
@@ -11,7 +11,7 @@ const Tab = createBottomTabNavigator();
 const HomeNavigator = () => {
     return (
         <Tab.Navigator
-            initialRouteName="Relevant"
+            initialRouteName="relevant"
             screenOptions={({ route }) =>({
                 tabBarIcon: ({ focused, color, size }) => {
                     let iconName;
@@ -21,7 +21,7 @@ const HomeNavigator = () => {
                         iconName = focused ? 'filter' : 'filter-outline';
                     else if (route.name == 'Reach')
                         iconName = focused ? 'chatbubbles' : 'chatbubbles-outline';
-                    else if (route.name === 'Profile')
+                    else if (route.name === 'ProfileNavigator')
                         iconName = focused ? 'person' : 'person-outline';
                     else
                         iconName = 'help';
@@ -36,7 +36,11 @@ const HomeNavigator = () => {
             <Tab.Screen name='Relevant' component={RelevantDiscussions}/>
             <Tab.Screen name='Filter' component={FilterDiscussions}/>
             <Tab.Screen name='Reach' component={ReachUser}/>
-            <Tab.Screen name='Profile' component={ProfileNavigator}/>
+            <Tab.Screen 
+                name='ProfileNavigator' 
+                component={ProfileNavigator} 
+                options={{tabBarLabel: 'Profile'}}
+            />
         </Tab.Navigator>
     );
 };

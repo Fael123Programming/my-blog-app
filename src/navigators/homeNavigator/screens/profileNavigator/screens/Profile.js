@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
     SafeAreaView,
     View,
+    Pressable,
     Text,
     StyleSheet,
 } from 'react-native';
@@ -9,6 +10,7 @@ import Fonts from '../../../../../utils/Fonts';
 import { useAppDispatch, useAppSelector } from '../../../../../app/hooks';
 import { selectUserData, setUserDataAsync } from '../../../../../features/userData/userDataSlice';
 import AppActivityIndicator from '../../../../../components/AppActivityIndicator';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 
 const IMAGES = '../../../../assets/images/';
 
@@ -42,19 +44,31 @@ const Profile = ({navigation}) => {
     const {
         title,
         text,
-        innerContainer
+        innerContainer,
     } = styles;
     
-    const signIn = () => navigation.navigate('login');
+    const signIn = () => navigation.navigate('Login');
 
-    const signUp = () => navigation.navigate('signup');
+    const signUp = () => navigation.navigate('SignUpNavigator');
 
     return (
         <SafeAreaView style={container}>
             <Text style={title}>No Account Detected</Text>
             <View style={innerContainer}>
-                <Text style={text} onPress={signIn}>Login</Text>
-                <Text style={text} onPress={signUp}>Create One</Text>
+                <Pressable 
+                    style={container}
+                    onPress={signIn}
+                >
+                    <MaterialCommunityIcons name="login-variant" size={24} color="purple" />
+                    <Text style={text}>Log In</Text>
+                </Pressable>
+                <Pressable 
+                    style={container}
+                    onPress={signUp}
+                >
+                    <Ionicons name="create" size={24} color="purple" />
+                    <Text style={text}>Sign Up</Text>
+                </Pressable>
             </View>
         </SafeAreaView>
     );
@@ -77,13 +91,12 @@ const styles = StyleSheet.create({
         ...Fonts.bodyLarge,
         fontWeight: 'bold',
         fontFamily: 'serif',
-        textDecorationLine: 'underline'
     },
     innerContainer: {
         flexDirection: 'row', 
         width: 300, 
         justifyContent: 'space-evenly'
-    }
+    },
 });
 
 export default Profile;
