@@ -4,10 +4,12 @@ import {
     Action
 } from '@reduxjs/toolkit';
 import userDataReducer from '../features/userData/userDataSlice';
+import relevantDiscussionsReducer from '../features/relevantDiscussions/relevantDiscussionsSlice';
 
 export const store = configureStore({
     reducer: {
         userData: userDataReducer,
+        relevantDiscussions: relevantDiscussionsReducer
     },
 });
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import RelevantDiscussions from "./screens/RelevantDiscussions";
+import RelevantDiscussionsNavigator from './screens/relevantDiscussionsNavigator/RelevantDiscussionsNavigator';
 import FilterDiscussions from "./screens/FilterDiscussions";
 import ReachUser from "./screens/ReachUser";
 import ProfileNavigator from './screens/profileNavigator/ProfileNavigator';
@@ -33,7 +33,16 @@ const HomeNavigator = () => {
                 tabBarHideOnKeyboard: true
             })}
         >
-            <Tab.Screen name='Relevant' component={RelevantDiscussions}/>
+            <Tab.Screen 
+                name='Relevant' 
+                component={RelevantDiscussionsNavigator}
+                options={
+                    {
+                        tabBarLabel: 'Relevant', 
+                        headerShown: false
+                    }
+                }
+            />
             <Tab.Screen name='Filter' component={FilterDiscussions}/>
             <Tab.Screen name='Reach' component={ReachUser}/>
             <Tab.Screen 
