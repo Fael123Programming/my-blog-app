@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import {
+    Alert,
     Pressable,
     View,
     Text,
     StyleSheet,
-    Image
+    Image,
 } from 'react-native';
 import Fonts from '../../../../../utils/Fonts';
 import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
+import { fetchUserDataOfAsync } from '../../../../../../service';
+import { getAuth } from 'firebase/auth';
 
 const GREEN = '#07850b';
 const RED = '#de0000';
 
 const DiscussionCard = ({
     data,
-    onPressComment
+    onPressComment,
 }) => {
     const {
         container,
@@ -38,8 +41,24 @@ const DiscussionCard = ({
     const [dislikeIconColor, setDislikeIconColor] = useState('black');
     const [commentIcon, setCommentIcon] = useState('comment-multiple-outline');
 
+    const [user, setUser] = useState(null);
+
+    const [loggedIn, setLoggedIn] = useState(false);
+
+    useEffect(() => {
+        (async () => {
+            setUser(await fetchUserDataOfAsync(data.userId, ['name', 'surname']));
+        })();
+    }, []);
+
+    if (!user)
+        return null;
+
     return (
         <View style={container}>
+            <View style={{alignSelf: 'flex-end'}}>
+                <Text style={postedAt}>{data?.postedAt?.replace('T', ' ').replace('Z', '')}</Text>
+            </View>
             <View style={userBar}>
                 <View>
                     <Image
@@ -49,34 +68,25 @@ const DiscussionCard = ({
                     />
                 </View>
                 <View style={{flex: 1, marginLeft: 10}}>
-                    <Text style={userName}>Marcos Rogel</Text>
-                </View>
-                <View>
-                    <Text style={postedAt}>2023-07-01 11:20:30.058</Text>
+                    <Text style={userName}>{user?.name + ' ' + user?.surname}</Text>
                 </View>
             </View>
             <View style={bodyContainer}>
                 <View style={titleContainer}>
-                    <Text style={titleText}>What's lorem ipsum?</Text>
+                    <Text style={titleText}>{data?.title}</Text>
                 </View>
                 <View style={descriptionContainer}>
-                    <Text>
-                        Lorem Ipsum is simply dummy text of the printing and 
-                        typesetting industry. Lorem Ipsum has been the industry's 
-                        standard dummy text ever since the 1500s, when an unknown 
-                        printer took a galley of type and scrambled it to make a type 
-                        specimen book. It has survived not only five centuries, but also 
-                        the leap into electronic typesetting, remaining essentially 
-                        unchanged. It was popularised in the 1960s with the release of 
-                        Letraset sheets containing Lorem Ipsum passages, and more recently 
-                        with desktop publishing software like Aldus PageMaker including 
-                        versions of Lorem Ipsum.
-                    </Text>
+                    <Text>{data?.description}</Text>
                 </View>
                 <View style={likeContainer}>
                     <View style={likeInnerContainer}>
                         <Pressable
                             onPress={_ => {
+                                    const auth = getAuth();
+                                    if (!auth.currentUser) { // No user logged in.
+                                        Alert.alert('Not Logged In', 'Sorry about that but to like a post you should be logged in to an account.');
+                                        return;
+                                    }
                                     if (dislikeIcon === 'dislike1') {
                                         setDislikeIcon('dislike2');
                                         setDislikeIconColor('black');
@@ -96,11 +106,16 @@ const DiscussionCard = ({
                         >
                             <AntDesign name={likeIcon} size={24} color={likeIconColor}/>
                         </Pressable>
-                        <Text style={count}>5</Text>
+                        <Text style={count}>{data?.likes?.length}</Text>
                     </View>
                     <View style={likeInnerContainer}>
                         <Pressable
                             onPress={_ => {
+                                    const auth = getAuth();
+                                    if (!auth.currentUser) { // No user logged in.
+                                        Alert.alert('Not Logged In', 'Sorry about that but to dislike a post you should be logged in to an account.');
+                                        return;
+                                    }
                                     if (likeIcon === 'like1') {
                                         setLikeIcon('like2');
                                         setLikeIconColor('black');
@@ -120,7 +135,7 @@ const DiscussionCard = ({
                         >
                             <AntDesign name={dislikeIcon} size={24} color={dislikeIconColor}/>
                         </Pressable>
-                        <Text style={count}>2</Text>
+                        <Text style={count}>{data?.dislikes?.length}</Text>
                     </View>
                     <View style={likeInnerContainer}>
                         <Pressable 
@@ -130,7 +145,7 @@ const DiscussionCard = ({
                         >
                             <MaterialCommunityIcons name={commentIcon} size={24} color="black" />
                         </Pressable>
-                        <Text style={count}>3</Text>
+                        <Text style={count}>{data?.comments?.length}</Text>
                     </View>
                 </View>
             </View>
@@ -142,20 +157,17 @@ const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
         justifyContent: 'center',
-        width: '100%',
         backgroundColor: 'white',
-        borderColor: 'black',
-        borderWidth: 1,
         margin: 15,
-        padding: 15
+        padding: 15,
+        borderRadius: 5
     },
     userBar: {
         flexDirection: 'row',
         alignItems: 'center',
     },
     bodyContainer: {
-        marginVertical: 10,
-        paddingVertical: 10
+        marginTop: 10
     },
     userImage: {
         height: 40,

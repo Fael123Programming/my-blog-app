@@ -4,6 +4,9 @@ import {
     View,
     Text,
     StyleSheet,
+    ActivityIndicator,
+    SectionList,
+    FlatList
 } from 'react-native';
 import Fonts from '../../../../../utils/Fonts';
 import { useAppDispatch, useAppSelector } from '../../../../../app/hooks';
@@ -18,21 +21,45 @@ const RelevantDiscussions = ({route, navigation}) => {
 
     const dispatch = useAppDispatch();
 
+    const [loading, setLoading] = useState(true);
+
     useEffect(() => {
         dispatch(setRelevantDiscussionsAsync());
     }, []);
 
     useEffect(() => {
-        if (relevantDiscussions?.value)
+        if (relevantDiscussions?.value) {
             setRelevantDiscussionsState(relevantDiscussions.value);
+            setLoading(false);
+        }
     }, [relevantDiscussions]);
 
+    const {
+        container
+    } = styles;
+
     return (
-        <SafeAreaView style={styles.container}>
-            <DiscussionCard
-                onPressComment={_ => navigation.navigate('DiscussionComments')}
-            />
-            {/* <Text style={Fonts.displaySmall} onPress={_ => navigation.navigate('DiscussionComments')}>Relevant Discussions</Text> */}
+        <SafeAreaView style={container}>
+            {
+                relevantDiscussionsStatus === 'loading' || loading ? (
+                    <ActivityIndicator size={'large'} color={'purple'}/>
+                ) : (
+                    <FlatList
+                        data={relevantDiscussionsState}
+                        renderItem={
+                            (
+                                {item}
+                            ) => (
+                                <DiscussionCard 
+                                    data={item} 
+                                    onPressComment={_ => navigation.navigate('DiscussionComments', {'comments': item.comments})}
+                                />
+                            )
+                        }
+                        keyExtractor={item => item.postId}
+                    />
+                )
+            }
         </SafeAreaView>
     );
 };

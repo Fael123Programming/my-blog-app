@@ -25,11 +25,11 @@ const HomeNavigator = () => {
                         iconName = focused ? 'person' : 'person-outline';
                     else
                         iconName = 'help';
-                    return <Ionicons name={iconName} size={24} color="black" />;
+                    return <Ionicons name={iconName} size={24} color="purple"/>;
                 },
                 headerShown: false,
                 tabBarShowLabel: true,
-                tabBarActiveTintColor: 'black',
+                tabBarActiveTintColor: 'purple',
                 tabBarHideOnKeyboard: true
             })}
         >
